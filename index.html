@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Finder</title>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #0d0d0d;
+            color: #e6e6e6;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .search-bar input {
+            width: 60%;
+            max-width: 500px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+        }
+
+        .filters {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .filters button {
+            background-color: #1a1a1a;
+            color: white;
+            border: 1px solid #333;
+            padding: 10px 18px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .filters button:hover {
+            background-color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 10px;
+        }
+
+        .book {
+            background-color: #1a1a1a;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            display: flex;
+            gap: 20px;
+            border: 1px solid #333;
+        }
+
+        .book img {
+            width: 90px;
+            height: 130px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .book h3 {
+            margin: 0 0 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>📚 Book Finder</h1>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search books..." onkeyup="searchBooks()">
+        </div>
+
+        <div class="filters">
+            <button onclick="filterCategory('all')">All</button>
+            <button onclick="filterCategory('arabic')">Arabic</button>
+            <button onclick="filterCategory('foreign')">Foreign</button>
+            <button onclick="filterCategory('fantasy')">Fantasy</button>
+            <button onclick="filterCategory('classic')">Classic</button>
+        </div>
+    </header>
+
+    <div class="container" id="bookList">
+
+        <!-- Arabic Books -->
+        <div class="book" data-category="arabic classic">
+            <img src="https://covers.feedbooks.net/book/10530.jpg?size=large" alt="">
+            <div>
+                <h3>هيبتا</h3>
+                <p>By محمد صادق</p>
+            </div>
+        </div>
+
+        <div class="book" data-category="arabic fantasy">
+            <img src="https://i.imgur.com/3QeI3sF.jpg" alt="">
+            <div>
+                <h3>الفيل الأزرق</h3>
+                <p>By أحمد مراد</p>
+            </div>
+        </div>
+
+        <!-- Foreign Books -->
+        <div class="book" data-category="foreign classic">
+            <img src="https://m.media-amazon.com/images/I/81af+MCATTL.jpg" alt="">
+            <div>
+                <h3>The Great Gatsby</h3>
+                <p>By F. Scott Fitzgerald</p>
+            </div>
+        </div>
+
+        <div class="book" data-category="foreign classic">
+            <img src="https://m.media-amazon.com/images/I/71KilybDOoL.jpg" alt="">
+            <div>
+                <h3>1984</h3>
+                <p>By George Orwell</p>
+            </div>
+        </div>
+
+        <div class="book" data-category="foreign fantasy">
+            <img src="https://m.media-amazon.com/images/I/91b0C2YNSrL.jpg" alt="">
+            <div>
+                <h3>The Hobbit</h3>
+                <p>By J.R.R. Tolkien</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function searchBooks() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let books = document.querySelectorAll(".book");
+
+            books.forEach(book => {
+                let title = book.querySelector("h3").innerText.toLowerCase();
+                let author = book.querySelector("p").innerText.toLowerCase();
+
+                if (title.includes(input) || author.includes(input)) {
+                    book.classList.remove("hidden");
+                } else {
+                    book.classList.add("hidden");
+                }
+            });
+        }
+
+        function filterCategory(category) {
+            let books = document.querySelectorAll(".book");
+
+            books.forEach(book => {
+                if (category === "all") {
+                    book.classList.remove("hidden");
+                } else {
+                    let cats = book.getAttribute("data-category");
+                    if (cats.includes(category)) {
+                        book.classList.remove("hidden");
+                    } else {
+                        book.classList.add("hidden");
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
